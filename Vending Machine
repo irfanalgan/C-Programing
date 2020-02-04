@@ -1,0 +1,398 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void ShowMenu(){
+	printf("\n");
+	printf("1. Water\t\t1.00tl\n");
+	printf("2. Coke\t\t\t1.20tl\n");
+	printf("3. Diet Coke\t\t1.20tl\n");
+	printf("4. Iced Tea\t\t1.00tl\n");
+	printf("5. Swiss Chocolate\t1.50tl\n");
+	printf("6. Candy\t\t0.95tl\n");
+	printf("7. Chips\t\t2.50tl\n");
+	printf("8. Bubble Gum\t\t1.50tl\n");
+	printf("9. Turkish Delight\t2.00tl\n");
+	printf("\n");
+	
+}
+
+void DisplayErrorMessage(int error){
+	if(error==1){
+		printf("Error! Insufficient amount of money! Take your money back!");
+	}
+	if(error==2){
+		printf("Item that you want is not aviable!");
+	}
+	if(error==3){
+		printf("The vending machine does not have enough cash to make return change!");
+	}
+	if(error==4){
+		printf("You made an invalid selection!");
+	}
+	
+} 
+
+void MakeSelection(int select,int *pm){
+	
+	
+	if(select==1){
+		*(pm)=*(pm)-1;
+	}
+	if(select==2){
+		*(pm+1)=*(pm+1)-1;
+	}
+	if(select==3){
+		*(pm+2)=*(pm+2)-1;
+	}	
+	if(select==4){
+		*(pm+3)=*(pm+3)-1;
+	}
+	if(select==5){
+		*(pm+4)=*(pm+4)-1;
+	}
+	if(select==6){
+		*(pm+5)=*(pm+5)-1;
+	}
+	if(select==7){
+		*(pm+6)=*(pm+6)-1;
+	}
+	if(select==8){
+		*(pm+7)=*(pm+7)-1;
+	}
+	if(select==9){
+		*(pm+8)=*(pm+8)-1;
+	}
+
+						
+}
+
+
+void ReturnChange(float tmoney,int *pc){
+	int e;
+	int counter[5]={0,0,0,0,0};
+	float tempMoney=tmoney;
+	int amount=((*(pc) * 1)+(*(pc+1) * 0.5)+(*(pc+2) * 0.25)+(*(pc+3) * 0.1)+(*(pc+4) * 0.05));
+	if(tmoney<=amount){
+		printf("Get your item!	");
+		if(*(pc)== 0 && tmoney>=1){
+			printf("No 1 TL left!	");
+		}
+		else{
+			while(*(pc)!= 0 && tmoney>=1){
+				*(pc)-=1;
+				tmoney-=1;
+				counter[0]+=1;
+			}
+		}
+		
+		if(*(pc+1)== 0 && tmoney>=0.5){
+			printf("No 0.5 TL left!	");
+		}
+		else{
+			while(*(pc+1)!= 0 && tmoney>=0.499){
+				*(pc+1)-=1;
+				tmoney-=0.5;
+				counter[1]+=1;
+			}
+			if(*(pc)==0 && counter[1]!=0) printf(" %d 0.5 TLs are used!",counter[1]);	
+		}
+		if(*(pc+2)== 0 && tmoney>=0.25){
+			printf("No 0.25 TL left!	");
+		}
+		else{
+			while(*(pc+2)!= 0 && tmoney>=0.25){
+				*(pc+2)-=1;
+				tmoney-=0.25;
+				counter[2]+=1;
+			}
+			if(*(pc)==0 && *(pc+1)==0 && counter[2]!=0) printf(" %d 0.25 TLs are used!",counter[2]);
+		}
+		if(*(pc+3)== 0 && tmoney>=0.1){
+			printf("No 0.1 TL left!	");
+		}
+		else{
+			while(*(pc+3)!= 0 && tmoney>=0.1){
+				*(pc+3)-=1;
+				tmoney-=0.1;
+				counter[3]+=1;
+			}
+			if(*(pc)==0 && *(pc+1)==0 && *(pc+2)==0 && counter[3]!=0) printf(" %d 0.10 TLs are used!",counter[3]);
+		}	
+		if(*(pc+4)== 0 && tmoney>=0.05){
+			printf("No 0.05 TL left!	");
+		}
+		else{
+			while(*(pc+4)!= 0 && tmoney>=0.0489){
+				*(pc+4)-=1;
+				tmoney-=0.05;
+				counter[4]+=1;
+			}
+			if(*(pc)==0 && *(pc+1)==0 && *(pc+2)==0 && *(pc+3)==0 && counter[4]!=0) printf(" %d 0.05 TLs are used!",counter[4]);
+		}
+		printf("\tChange = %.2f",tempMoney);
+	}
+	else{
+		e=3;
+		DisplayErrorMessage(e);
+	}
+}
+
+void Maintenance(int *a,int*b){
+	
+	int i;
+	float tot1=0,tot2=0,tot3=0,tot4=0,tot5=0,tot6=0,tot7=0,tot8=0,tot9=0;				//calculates the income//
+	float total;
+	
+	printf("\n\nDAILY REPORT\n\n");
+	printf("Number of items left:");
+	printf("\n");
+	printf("1. Water:\t\t%d\n",a[0]);
+	printf("2. Coke:\t\t%d\n",a[1]);
+	printf("3. Diet Coke:\t\t%d\n",a[2]);
+	printf("4. Iced Tea:\t\t%d\n",a[3]);
+	printf("5. Swiss Chocolate:\t%d\n",a[4]);
+	printf("6. Candy:\t\t%d\n",a[5]);
+	printf("7. Chips:\t\t%d\n",a[6]);
+	printf("8. Bubble Gum:\t\t%d\n",a[7]);
+	printf("9. Turkish Delight:\t%d\n",a[8]);
+	printf("\n");
+			
+	printf("Number of coins left:");
+	printf("\n");
+	printf("1 tl: %d left\n",b[0]);
+	printf("0.50 tl: %d left\n",b[1]);
+	printf("0.25 tl: %d left\n",b[2]);
+	printf("0.10 tl: %d left\n",b[3]);
+	printf("0.05 tl: %d left\n",b[4]);
+		
+	tot1=1*(10-a[0]);
+	tot2=1.20*(10-a[1]);
+	tot3=1.20*(10-a[2]);
+	tot4=1*(10-a[3]);
+	tot5=1.50*(10-a[4]);
+	tot6=0.95*(10-a[5]);
+	tot7=2.50*(10-a[6]);
+	tot8=1.50*(10-a[7]);
+	tot9=2*(10-a[8]);
+
+	
+	total=tot1+tot2+tot3+tot4+tot5+tot6+tot7+tot8+tot9;
+	
+	printf("\n\n");
+	printf("Net income: %.2ftl\n",total);
+	for(i=0;i<10;i++){
+		a[i]=10;
+	}
+	for(i=0;i<5;i++){
+		b[i]=10;
+	}
+	printf("All items in the vending machine are restocked");
+
+}
+
+int main(){
+	
+	int pin;
+	int e;												//error check//
+
+	int menu[9]={10,10,10,10,10,10,10,10,10};
+	int cash[5]={10,10,10,10,10};
+
+	int *pfm,*pfc;										//pointer for menu and cash//
+	float money=0;
+	int selection;
+
+	pfm=menu;
+	pfc=cash;
+	
+	ShowMenu();	
+	printf("\nEnter amount of money:");
+	scanf("%f",&money);
+	float tempmoney=money;
+	
+	while(money!=-1){
+		printf("Select an item:");
+		scanf("%d",&selection);
+		while(selection<0 || selection>9){
+			e=4;
+			DisplayErrorMessage(e);
+			printf("\nSelect an item:");
+			scanf("%d",&selection);
+		}
+
+	
+		if(selection==1){
+			if(money>=1){
+				if(*(pfm)!=0){
+					MakeSelection(selection,menu);
+					tempmoney=tempmoney-1;
+					ReturnChange(tempmoney,cash);
+				}
+				else{
+					e=2;
+					DisplayErrorMessage(e);	
+				}
+			}
+			else{
+				e=1;
+				DisplayErrorMessage(e);
+			}
+		}
+		if(selection==2){
+			if(money>=1.20){
+				if(*(pfm+1)!=0){
+					MakeSelection(selection,menu);
+					tempmoney=tempmoney-1.20;
+					ReturnChange(tempmoney,cash);
+				}
+				else{
+					e=2;
+					DisplayErrorMessage(e);	
+				}
+			}
+			else{
+				e=1;
+				DisplayErrorMessage(e);
+			}
+		}
+		if(selection==3){
+			if(money>=1.20){
+				if(*(pfm+2)!=0){
+					MakeSelection(selection,menu);
+					tempmoney=tempmoney-1.20;
+					ReturnChange(tempmoney,cash);
+
+				}
+				else{
+					e=2;
+					DisplayErrorMessage(e);	
+				}
+			}
+			else{
+				e=1;
+				DisplayErrorMessage(e);
+			}
+		}
+		if(selection==4){
+			if(money>=1){
+				if(*(pfm+3)!=0){
+					MakeSelection(selection,menu);
+					tempmoney=tempmoney-1;
+					ReturnChange(tempmoney,cash);
+				}
+				else{
+					e=2;
+					DisplayErrorMessage(e);	
+				}
+			}
+			else{
+				e=1;
+				DisplayErrorMessage(e);
+			}
+		}
+		if(selection==5){
+			if(money>=1.50){
+				if(*(pfm+4)!=0){
+					MakeSelection(selection,menu);
+					tempmoney=tempmoney-1.50;
+					ReturnChange(tempmoney,cash);
+				}
+				else{
+					e=2;
+					DisplayErrorMessage(e);	
+				}
+			}
+			else{
+				e=1;
+				DisplayErrorMessage(e);
+			}
+		}
+		if(selection==6){
+			if(money>=0.949){
+				if(*(pfm+5)!=0){
+					MakeSelection(selection,menu);
+					tempmoney=tempmoney-0.95;
+					ReturnChange(tempmoney,cash);
+				}
+				else{
+					e=2;
+					DisplayErrorMessage(e);	
+				}
+			}
+			else{
+				e=1;
+				DisplayErrorMessage(e);
+			}
+		}
+		if(selection==7){
+			if(money>=2.50){
+				if(*(pfm+6)!=0){
+					MakeSelection(selection,menu);
+					tempmoney=tempmoney-2.50;
+					ReturnChange(tempmoney,cash);
+				}
+				else{
+					e=2;
+					DisplayErrorMessage(e);	
+				}
+			}
+			else{
+				e=1;
+				DisplayErrorMessage(e);
+			}
+		}
+		if(selection==8){
+			if(money>=1.50){
+				if(*(pfm+7)!=0){
+					MakeSelection(selection,menu);
+					tempmoney=tempmoney-1.50;
+					ReturnChange(tempmoney,cash);
+				}
+				else{
+					e=2;
+					DisplayErrorMessage(e);	
+				}
+			}
+			else{
+				e=1;
+				DisplayErrorMessage(e);
+			}
+		}
+		if(selection==9){
+			if(money>=2){
+				if(*(pfm+8)!=0){
+					MakeSelection(selection,menu);
+					tempmoney=tempmoney-2;
+					ReturnChange(tempmoney,cash);
+				}
+				else{
+					e=2;
+					DisplayErrorMessage(e);	
+				}
+			}
+			else{
+				e=1;
+				DisplayErrorMessage(e);
+			}
+		}
+	printf("\n");
+	printf("\nEnter amount of money:");
+	scanf("%f",&money);
+	tempmoney=money;
+		
+	}
+	do{
+	printf("Enter pin code:");
+	scanf("%d",&pin);
+	
+	if(pin==1234){
+		Maintenance(menu,cash);
+			
+	}
+	else
+		printf("Password is wrong!!\n");
+	}
+	while(pin!=1234);
+		
+	return 0;
+}
